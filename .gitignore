@@ -1,0 +1,99 @@
+## =====================
+## .NET / Visual Studio
+## =====================
+
+**/bin/
+**/obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# build Rider / ReSharper
+.idea/
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Visual Studio
+.vs/
+.vscode/
+*.swp
+*.swo
+
+# Publish output
+publish/
+*.pubxml.user
+PublishScripts/
+
+# NuGet
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+*.nuget.props
+*.nuget.targets
+
+## =====================
+## Secrets
+## =====================
+
+# secrets
+**/appsettings.json
+**/appsettings.Development.json
+**/appsettings.Production.json
+**/appsettings.Local.json
+**/appsettings.*.json
+!**/appsettings.example.json
+
+# User Secrets
+secrets.json
+*.pfx
+*.p12
+*.pem
+*.key
+
+# env
+.env
+.env.local
+.env.*.local
+
+## =====================
+## EF Core
+## =====================
+
+dump
+*.dbm
+*.dbmdl
+
+## =====================
+## OS
+## =====================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+## =====================
+## Logs and temp
+## =====================
+
+*.log
+logs/
+*.tmp
+*.bak
