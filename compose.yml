@@ -17,11 +17,7 @@ services:
       retries: 10
 
   worker:
-    image: ${GNOSISPAY_SYNC_IMAGE:-pierrick1213/gnosispay-sync:latest}
-    build:
-      context: .
-      dockerfile: Dockerfile
-    pull_policy: ${PULL_POLICY:-always}
+    image: ${GNOSISPAY_SYNC_IMAGE:-pickcool/gnosispay-sync:latest}
     restart: unless-stopped
     depends_on:
       postgres:

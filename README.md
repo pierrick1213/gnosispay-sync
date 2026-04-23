@@ -1,5 +1,9 @@
 # GnosisPay Sync
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/pickcool/gnosispay-sync)](https://hub.docker.com/r/pickcool/gnosispay-sync)
+[![Docker Image Version](https://img.shields.io/docker/v/pickcool/gnosispay-sync?sort=semver)](https://hub.docker.com/r/pickcool/gnosispay-sync/tags)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Automatic synchronization of your Gnosis Pay card transactions to a PostgreSQL database.
 Self-hosted, privacy-first, built with .NET 10.
 
@@ -48,6 +52,7 @@ storing them in your own PostgreSQL database.
 ## Quick Start — Docker (recommended)
 
 Only requires Docker. No .NET SDK, no manual migrations.
+Image published on Docker Hub: [pickcool/gnosispay-sync](https://hub.docker.com/r/pickcool/gnosispay-sync).
 
 1. **Clone and enter the project**
    ```bash
@@ -68,7 +73,7 @@ Only requires Docker. No .NET SDK, no manual migrations.
    docker compose up -d
    ```
 
-That's it. Compose will pull `pierrick1213/gnosispay-sync:latest` from Docker Hub,
+That's it. Compose will pull `pickcool/gnosispay-sync:latest` from Docker Hub,
 start PostgreSQL alongside it, apply EF Core migrations automatically, run SIWE auth,
 and backfill all your transactions on the first run.
 
@@ -77,12 +82,7 @@ and backfill all your transactions on the first run.
 docker compose logs -f worker
 ```
 
-**Pin a specific version** — set `GNOSISPAY_SYNC_IMAGE=pierrick1213/gnosispay-sync:1.0.0` in `.env`.
-
-**Build locally instead of pulling** — useful when iterating on the code:
-```bash
-PULL_POLICY=never docker compose up -d --build
-```
+**Pin a specific version** — set `GNOSISPAY_SYNC_IMAGE=pickcool/gnosispay-sync:1.0.0` in `.env`.
 
 ## Quick Start — Local (.NET)
 
@@ -144,8 +144,7 @@ contains any secret.
 | `POSTGRES_PORT` | Host port exposed for Postgres | `5432` |
 | `GNOSISPAY_API_BASE_URL` | Gnosis Pay API URL | `https://api.gnosispay.com` |
 | `GNOSISPAY_PRIVATE_KEY` | Sign-in wallet private key | *required* |
-| `GNOSISPAY_SYNC_IMAGE` | Worker image to pull | `pierrick1213/gnosispay-sync:latest` |
-| `PULL_POLICY` | Compose pull policy (`always`/`missing`/`never`) | `always` |
+| `GNOSISPAY_SYNC_IMAGE` | Worker image to pull | `pickcool/gnosispay-sync:latest` |
 
 ### `appsettings.json` keys
 
@@ -160,12 +159,26 @@ contains any secret.
 | `GnosisPay:ChainId` | EVM chain ID (Gnosis = 100) | `100` |
 | `GnosisPay:JwtTtlInSeconds` | SIWE JWT lifetime | `86400` |
 
-When running in Docker, any `appsettings.json` key can be overridden via env vars
-using the `__` separator (e.g. `GnosisPay__ChainId=100`).
+Any `appsettings.json` key can also be set via env vars using the `__` separator
+(e.g. `GnosisPay__ChainId=100`) — env vars always win over the JSON file.
 
 ## License
 
 MIT — see LICENSE file
+
+## Releasing (maintainers)
+
+Pushing a semver tag triggers the [Release & Docker Publish](.github/workflows/release.yml)
+workflow, which creates a GitHub Release (with a zipped .NET publish bundle) and pushes
+the multi-arch Docker image to Docker Hub with tags `X.Y.Z`, `X.Y`, and `latest`.
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+Pre-release tags (e.g. `v1.0.0-rc1`) are published on Docker Hub but do **not** update
+the `latest` tag.
 
 ## Contributing
 
