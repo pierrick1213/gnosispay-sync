@@ -68,4 +68,11 @@ builder.Services.AddQuartzHostedService(opts =>
 });
 
 var host = builder.Build();
+
+using (var scope = host.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
+
 host.Run();
